@@ -70,6 +70,8 @@ impl fmt::Display for State {
         if self.arg.is_empty() {
             if let Some(c) = self.current {
                 return write!(f, "{}", c);
+            } else {
+                return Ok(());
             }
         }
 
