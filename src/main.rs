@@ -135,10 +135,11 @@ fn build_ui() -> Window {
     out.set_property_margin(5);
 
     let btn_grid = Grid::new();
+    btn_grid.attach(&out, 0, 0, 4, 1);
 
     // clear button
     let button_clr = Button::new_with_label("AC");
-    btn_grid.attach(&button_clr, 0, 0, 1, 1);
+    btn_grid.attach(&button_clr, 0, 1, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
     button_clr.set_can_focus(false);
@@ -149,7 +150,7 @@ fn build_ui() -> Window {
 
     // sign inversion button
     let button_inv = Button::new_with_label("±");
-    btn_grid.attach(&button_inv, 1, 0, 1, 1);
+    btn_grid.attach(&button_inv, 1, 1, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
     button_inv.set_can_focus(false);
@@ -159,7 +160,7 @@ fn build_ui() -> Window {
     });
 
     let button_pct = Button::new_with_label("%");
-    btn_grid.attach(&button_pct, 2, 0, 1, 1);
+    btn_grid.attach(&button_pct, 2, 1, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
     button_pct.set_can_focus(false);
@@ -168,24 +169,24 @@ fn build_ui() -> Window {
         update_disp!(ctrc, outc);
     });
 
-    btn_grid.attach(&btn!("÷", Op::Div, ctr, out), 3, 0, 1, 1);
-    btn_grid.attach(&btn!("7", ctr, out), 0, 1, 1, 1);
-    btn_grid.attach(&btn!("8", ctr, out), 1, 1, 1, 1);
-    btn_grid.attach(&btn!("9", ctr, out), 2, 1, 1, 1);
-    btn_grid.attach(&btn!("×", Op::Mul, ctr, out), 3, 1, 1, 1);
-    btn_grid.attach(&btn!("4", ctr, out), 0, 2, 1, 1);
-    btn_grid.attach(&btn!("5", ctr, out), 1, 2, 1, 1);
-    btn_grid.attach(&btn!("6", ctr, out), 2, 2, 1, 1);
-    btn_grid.attach(&btn!("-", Op::Sub, ctr, out), 3, 2, 1, 1);
-    btn_grid.attach(&btn!("1", ctr, out), 0, 3, 1, 1);
-    btn_grid.attach(&btn!("2", ctr, out), 1, 3, 1, 1);
-    btn_grid.attach(&btn!("3", ctr, out), 2, 3, 1, 1);
-    btn_grid.attach(&btn!("+", Op::Add, ctr, out), 3, 3, 1, 1);
-    btn_grid.attach(&btn!("0", ctr, out), 0, 4, 2, 1);
+    btn_grid.attach(&btn!("÷", Op::Div, ctr, out), 3, 1, 1, 1);
+    btn_grid.attach(&btn!("7", ctr, out), 0, 2, 1, 1);
+    btn_grid.attach(&btn!("8", ctr, out), 1, 2, 1, 1);
+    btn_grid.attach(&btn!("9", ctr, out), 2, 2, 1, 1);
+    btn_grid.attach(&btn!("×", Op::Mul, ctr, out), 3, 2, 1, 1);
+    btn_grid.attach(&btn!("4", ctr, out), 0, 3, 1, 1);
+    btn_grid.attach(&btn!("5", ctr, out), 1, 3, 1, 1);
+    btn_grid.attach(&btn!("6", ctr, out), 2, 3, 1, 1);
+    btn_grid.attach(&btn!("-", Op::Sub, ctr, out), 3, 3, 1, 1);
+    btn_grid.attach(&btn!("1", ctr, out), 0, 4, 1, 1);
+    btn_grid.attach(&btn!("2", ctr, out), 1, 4, 1, 1);
+    btn_grid.attach(&btn!("3", ctr, out), 2, 4, 1, 1);
+    btn_grid.attach(&btn!("+", Op::Add, ctr, out), 3, 4, 1, 1);
+    btn_grid.attach(&btn!("0", ctr, out), 0, 5, 2, 1);
 
     // decimal point
     let button_pt = Button::new_with_label(".");
-    btn_grid.attach(&button_pt, 2, 4, 1, 1);
+    btn_grid.attach(&button_pt, 2, 5, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
     button_pt.set_can_focus(false);
@@ -199,7 +200,7 @@ fn build_ui() -> Window {
     });
 
     let button_eq = Button::new_with_label("=");
-    btn_grid.attach(&button_eq, 3, 4, 1, 1);
+    btn_grid.attach(&button_eq, 3, 5, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
     button_eq.grab_focus();
@@ -208,13 +209,10 @@ fn build_ui() -> Window {
         update_disp!(ctrc, outc);
     });
 
-    let vbox = gtk::Box::new(gtk::Orientation::Vertical, 2);
-    vbox.add(&out);
-    vbox.add(&btn_grid);
-
     let window = Window::new(WindowType::Toplevel);
     window.set_title("calculator");
-    window.add(&vbox);
+    window.set_resizable(false);
+    window.add(&btn_grid);
     let ctrc = ctr.clone();
     let outc = out.clone();
     window.connect_event(move |w, e| {
