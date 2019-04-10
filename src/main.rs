@@ -70,7 +70,7 @@ impl fmt::Display for State {
         if self.arg.is_empty() {
             if let Some(c) = self.current {
                 // argh rust doesn't have a `g` format type
-                let e = format!("{:e}", c);
+                let e = format!("{:.6e}", c);
                 let g = format!("{}", c);
                 return write!(f, "{}", if e.len() < g.len() { e } else { g });
             } else {
