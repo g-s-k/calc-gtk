@@ -69,7 +69,10 @@ impl fmt::Display for State {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if self.arg.is_empty() {
             if let Some(c) = self.current {
-                return write!(f, "{}", c);
+                // argh rust doesn't have a `g` format type
+                let e = format!("{:e}", c);
+                let g = format!("{}", c);
+                return write!(f, "{}", if e.len() < g.len() { e } else { g });
             } else {
                 return Ok(());
             }
