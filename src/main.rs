@@ -3,7 +3,7 @@ use std::fmt;
 use std::rc::Rc;
 
 use gdk::EventType::KeyPress;
-use gtk::{prelude::*, Button, Grid, Label, Window, WindowType};
+use gtk::{prelude::*, Button, Grid, Window, WindowType};
 
 macro_rules! update_disp {
     ( $state:expr, $displ:expr ) => {
@@ -130,7 +130,7 @@ impl State {
 
 fn build_ui() -> Window {
     let ctr = Rc::new(RefCell::new(State::default()));
-    let out = Label::new(None);
+    let out = gtk::Label::new(None);
     out.set_halign(gtk::Align::End);
     out.set_property_margin(5);
 
