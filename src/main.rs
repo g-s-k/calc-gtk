@@ -16,6 +16,7 @@ macro_rules! btn {
         let btn = Button::new_with_label($num);
         let state_c = $state.clone();
         let displ_c = $displ.clone();
+        btn.set_can_focus(false);
         btn.connect_clicked(move |_| {
             state_c.borrow_mut().arg.push_str($num);
             update_disp!(state_c, displ_c);
@@ -27,6 +28,7 @@ macro_rules! btn {
         let btn = Button::new_with_label($symb);
         let state_c = $state.clone();
         let displ_c = $displ.clone();
+        btn.set_can_focus(false);
         btn.connect_clicked(move |_| {
             state_c.borrow_mut().exec();
             state_c.borrow_mut().op = Some($op);
@@ -132,6 +134,7 @@ fn build_ui() -> Window {
     btn_grid.attach(&button_clr, 0, 0, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
+    button_clr.set_can_focus(false);
     button_clr.connect_clicked(move |_| {
         ctrc.borrow_mut().clear();
         update_disp!(ctrc, outc);
@@ -142,6 +145,7 @@ fn build_ui() -> Window {
     btn_grid.attach(&button_inv, 1, 0, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
+    button_inv.set_can_focus(false);
     button_inv.connect_clicked(move |_| {
         ctrc.borrow_mut().inv ^= true;
         update_disp!(ctrc, outc);
@@ -151,6 +155,7 @@ fn build_ui() -> Window {
     btn_grid.attach(&button_pct, 2, 0, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
+    button_pct.set_can_focus(false);
     button_pct.connect_clicked(move |_| {
         {
             let mut ctrc_m = ctrc.borrow_mut();
@@ -182,6 +187,7 @@ fn build_ui() -> Window {
     btn_grid.attach(&button_pt, 2, 4, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
+    button_pt.set_can_focus(false);
     button_pt.connect_clicked(move |_| {
         if ctrc.borrow().arg.contains('.') {
             return;
