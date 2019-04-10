@@ -2,6 +2,7 @@ use std::cell::RefCell;
 use std::fmt;
 use std::rc::Rc;
 
+use gdk::EventType::KeyPress;
 use gtk::{prelude::*, Button, Grid, Label, Window, WindowType};
 
 macro_rules! update_disp {
@@ -211,6 +212,32 @@ fn build_ui() -> Window {
     let window = Window::new(WindowType::Toplevel);
     window.set_title("calculator");
     window.add(&vbox);
+    let ctrc = ctr.clone();
+    let outc = out.clone();
+    window.connect_event(move |_, e| {
+        if let KeyPress = e.get_event_type() {
+            match e.get_keyval().and_then(gdk::keyval_to_unicode) {
+                Some(n @ '0'...'9') => {
+                    ctrc.borrow_mut().arg.push(n);
+                }
+                Some(o) if o == '+' || o == '-' || o == '*' || o == '/' => {
+                    ctrc.borrow_mut().exec();
+                    ctrc.borrow_mut().op = Some(match o {
+                        '+' => Op::Add,
+                        '-' => Op::Sub,
+                        '*' => Op::Mul,
+                        '/' => Op::Div,
+                        _ => unreachable!(),
+                    });
+                }
+                _ => return Inhibit(false),
+            }
+            update_disp!(ctrc, outc);
+            Inhibit(true)
+        } else {
+            Inhibit(false)
+        }
+    });
     window
 }
 

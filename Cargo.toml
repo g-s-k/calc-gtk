@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["George Kaplan <george@georgekaplan.xyz>"]
 edition = "2018"
 
+[dependencies]
+gdk = "0.10.0"
+
 [dependencies.gtk]
 version = "0.6.0"
 features = ["v3_16"]
