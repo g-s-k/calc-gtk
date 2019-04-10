@@ -99,6 +99,12 @@ impl State {
         std::mem::replace(&mut self.arg, String::new())
             .parse::<f64>()
             .expect("Could not parse as float")
+            * if self.inv {
+                self.inv = false;
+                -1.0
+            } else {
+                1.0
+            }
     }
 
     fn exec(&mut self) {
