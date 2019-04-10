@@ -110,12 +110,11 @@ impl State {
 
     fn exec(&mut self) {
         match (self.current, self.op.take()) {
-            (None, _) => {
+            (None, _) | (_, None) => {
                 if !self.arg.is_empty() {
                     self.current = Some(self.get_val());
                 }
             }
-            (Some(_), None) => (),
             (Some(c), Some(op)) => {
                 self.current = Some(op.to_fn()(c, self.get_val()));
             }
