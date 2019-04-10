@@ -216,7 +216,7 @@ fn build_ui() -> Window {
     window.add(&vbox);
     let ctrc = ctr.clone();
     let outc = out.clone();
-    window.connect_event(move |_, e| {
+    window.connect_event(move |w, e| {
         if let KeyPress = e.get_event_type() {
             match e.get_keyval().and_then(gdk::keyval_to_unicode) {
                 Some(n @ '0'...'9') => {
@@ -234,6 +234,9 @@ fn build_ui() -> Window {
                 }
                 Some(' ') | Some('\t') => {
                     ctrc.borrow_mut().clear();
+                }
+                Some('Q') => {
+                    w.close();
                 }
                 _ => return Inhibit(false),
             }
