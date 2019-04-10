@@ -91,6 +91,13 @@ impl State {
         *self = Default::default();
     }
 
+    fn div_100(&mut self) {
+        self.exec();
+        if let Some(c) = self.current.iter_mut().next() {
+            *c /= 100.0;
+        }
+    }
+
     fn get_val(&mut self) -> f64 {
         if self.arg.is_empty() {
             return 0.0;
@@ -157,13 +164,7 @@ fn build_ui() -> Window {
     let outc = out.clone();
     button_pct.set_can_focus(false);
     button_pct.connect_clicked(move |_| {
-        {
-            let mut ctrc_m = ctrc.borrow_mut();
-            ctrc_m.exec();
-            if let Some(c) = ctrc_m.current.iter_mut().next() {
-                *c /= 100.0;
-            }
-        }
+        ctrc.borrow_mut().div_100();
         update_disp!(ctrc, outc);
     });
 
@@ -222,6 +223,11 @@ fn build_ui() -> Window {
                 Some(n @ '0'...'9') => {
                     ctrc.borrow_mut().arg.push(n);
                 }
+                Some('.') => {
+                    if !ctrc.borrow().arg.contains('.') {
+                        ctrc.borrow_mut().arg.push('.');
+                    }
+                }
                 Some(o) if o == '+' || o == '-' || o == '*' || o == '/' => {
                     ctrc.borrow_mut().exec();
                     ctrc.borrow_mut().op = Some(match o {
@@ -234,6 +240,12 @@ fn build_ui() -> Window {
                 }
                 Some(' ') | Some('\t') => {
                     ctrc.borrow_mut().clear();
+                }
+                Some('i') => {
+                    ctrc.borrow_mut().inv ^= true;
+                }
+                Some('p') => {
+                    ctrc.borrow_mut().div_100();
                 }
                 Some('Q') => {
                     w.close();
