@@ -28,11 +28,8 @@ macro_rules! btn {
         let state_c = $state.clone();
         let displ_c = $displ.clone();
         btn.connect_clicked(move |_| {
-            {
-                let mut state_c_m = state_c.borrow_mut();
-                state_c_m.exec();
-                state_c_m.op = Some($op);
-            }
+            state_c.borrow_mut().exec();
+            state_c.borrow_mut().op = Some($op);
             update_disp!(state_c, displ_c);
         });
         btn
