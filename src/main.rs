@@ -232,6 +232,9 @@ fn build_ui() -> Window {
                         _ => unreachable!(),
                     });
                 }
+                Some(' ') | Some('\t') => {
+                    ctrc.borrow_mut().clear();
+                }
                 _ => return Inhibit(false),
             }
             update_disp!(ctrc, outc);
