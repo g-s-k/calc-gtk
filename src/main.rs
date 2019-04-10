@@ -2,7 +2,7 @@ use std::cell::RefCell;
 use std::fmt;
 use std::rc::Rc;
 
-use gtk::{prelude::*, Button, Label, Grid, Window, WindowType};
+use gtk::{prelude::*, Button, Grid, Label, Window, WindowType};
 
 macro_rules! update_disp {
     ( $state:expr, $displ:expr ) => {
