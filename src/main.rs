@@ -75,7 +75,11 @@ impl fmt::Display for State {
             }
         }
 
-        write!(f, "{}{}", if self.inv { "-" } else { "" }, self.arg)
+        if self.inv {
+            write!(f, "-")?;
+        }
+
+        write!(f, "{}", self.arg)
     }
 }
 
