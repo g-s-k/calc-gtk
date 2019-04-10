@@ -198,6 +198,7 @@ fn build_ui() -> Window {
     btn_grid.attach(&button_eq, 3, 4, 1, 1);
     let ctrc = ctr.clone();
     let outc = out.clone();
+    button_eq.grab_focus();
     button_eq.connect_clicked(move |_| {
         ctrc.borrow_mut().exec();
         update_disp!(ctrc, outc);
