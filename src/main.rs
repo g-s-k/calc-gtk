@@ -210,7 +210,6 @@ fn build_ui() -> Window {
 
     let window = Window::new(WindowType::Toplevel);
     window.set_title("calculator");
-    window.set_default_size(200, 200);
     window.add(&vbox);
     window
 }
